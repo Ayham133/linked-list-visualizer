@@ -12,12 +12,18 @@ int main(void)
     assert(list != NULL);
     printf("Passed\n");
 
-    printf("list head value is 0.......");
-    assert(list->head->value == 0);
+    printf("list size is 0.......");
+    assert(list->size == 0);
     printf("Passed\n");
 
-    printf("head.next should be null...");
-    assert(list->head->next == NULL);
+    printf("first insertion 10 to list...");
+    linked_list_insert(list, 10);
+    assert(list->head->value == 10);// head should have 10
+    printf("Passed\n");
+
+    printf("insert 20 to list............");
+    linked_list_insert(list, 20);
+    assert(list->tail->value == 20);//tail should have 20
     printf("Passed\n");
 
     return EXIT_SUCCESS;

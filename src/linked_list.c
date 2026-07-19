@@ -15,6 +15,31 @@ LinkedList *linked_list_create()
         return NULL;
 
     list->size = 0;
-    list->head = node_create(0, NULL); 
+    list->tail = NULL;
+    list->head = NULL;
     return list;
+}
+
+/**
+ * @brief   add new value to the linked list.
+ *
+ * @param value     the new value to add in this linked list.
+ */
+void linked_list_insert(LinkedList *list, int value)
+{
+    if(list == NULL)
+        exit(EXIT_FAILURE);
+
+    Node *node = node_create(value, NULL);
+    if(list->size == 0)
+    {
+        list->head = node;
+        list->tail = node;
+        list->size++;
+        return;
+    }
+    list->tail->next = node;
+    list->tail = node;
+
+    list->size++;
 }

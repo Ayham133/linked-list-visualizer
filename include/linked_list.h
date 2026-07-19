@@ -19,5 +19,13 @@ typedef struct LinkedList{
 LinkedList *linked_list_create();
 
 
+/**
+ * @brief   add new value to the linked list.
+ *
+ * @param list      pointer to the list.
+ * @param value     the new value to add in this linked list.
+ */
+void linked_list_insert(LinkedList *list,int value);
+
 #endif // !LINKED_LIST_H
 
