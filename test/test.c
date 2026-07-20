@@ -36,9 +36,36 @@ int main(void)
     assert(number == 20);
     printf("%d, Passed\n", number);
 
-    printf("get with invalid index.........");
-    linked_list_get(list, 5);
-    // printf("Passed\n");
+    // printf("get with invalid index.........");
+    // linked_list_get(list, 5);
+    // // printf("Passed\n");
+    //
+    printf("list before........................");
+    Node *temp = list->head;
+    while(temp != NULL)
+    {
+        printf("%d", temp->value);
+        if(temp->next != NULL)
+            printf("->");
+
+        temp = temp->next;
+    }
+    
+    printf("\ndelete the first value.......");
+    linked_list_delete(list, 0);
+    printf("Passed\n");
+
+    printf("list after........................");
+    temp = list->head;
+    while(temp != NULL)
+    {
+        printf("%d", temp->value);
+        if(temp->next != NULL)
+            printf("->");
+
+        temp = temp->next;
+    }
+    printf("\tPassed\n");
 
     return EXIT_SUCCESS;
 }

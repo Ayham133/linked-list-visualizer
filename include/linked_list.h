@@ -45,5 +45,14 @@ void linked_list_insert(LinkedList *list,int value);
  */
 int linked_list_get(LinkedList *list, int index);
 
+/**
+ * @brief   deletes the node at the index, and returns it's value.
+ *
+ * @param list      pointer to the list.
+ * @param index     the index of the node, that is going to get deleted.
+ * @return          return the value of the deleted node.
+ */
+int linked_list_delete(LinkedList *list, int index);
+
 #endif // !LINKED_LIST_H
 

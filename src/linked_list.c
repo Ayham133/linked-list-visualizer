@@ -82,3 +82,47 @@ int linked_list_get(LinkedList *list, int index)
 
     return temp->value;
 }
+
+/**
+ * @brief   deletes the node at the index, and returns it's value.
+ *
+ * @param list      pointer to the list.
+ * @param index     the index of the node, that is going to get deleted.
+ * @return          return the value of the deleted node.
+ */
+int linked_list_delete(LinkedList *list, int index)
+{
+    if(list == NULL || linked_list_empty(list))
+        exit(EXIT_FAILURE);
+
+    if(index < 0 || index >= list->size)
+        exit(EXIT_FAILURE);
+
+    int value;
+    // if the list has one node.
+    if(list->size == 1){
+        value = list->head->value;
+        free(list);
+        return value;
+    }
+
+    // if the deleted node is the head.
+    if(index == 0)
+    {
+        value = list->head->value;
+        list->head = list->head->next;
+        return value;
+    }
+
+    Node *temp = list->head;
+    while(temp != NULL && index > 1)
+    {
+        temp = temp->next;
+        index--;
+    }
+
+    value = temp->value;
+    temp->next = temp->next->next;
+
+    return value;
+}
