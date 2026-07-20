@@ -26,5 +26,19 @@ int main(void)
     assert(list->tail->value == 20);//tail should have 20
     printf("Passed\n");
 
+    printf("get the first value.........");
+    int number = linked_list_get(list, 0);
+    assert(number == 10);
+    printf("%d, Passed\n", number);
+
+    printf("get the second value.........");
+    number = linked_list_get(list, 1);
+    assert(number == 20);
+    printf("%d, Passed\n", number);
+
+    printf("get with invalid index.........");
+    linked_list_get(list, 5);
+    // printf("Passed\n");
+
     return EXIT_SUCCESS;
 }
