@@ -54,5 +54,35 @@ int linked_list_get(LinkedList *list, int index);
  */
 int linked_list_delete(LinkedList *list, int index);
 
+/**
+ * @brief   check if the list containes the passed value.
+ *
+ * @param list      pointer to the list.
+ * @param value     the value to search for in the list.
+ * @return          return true if the valuse was found in the list, false other wise.
+ */
+bool linked_list_containes(LinkedList *list, int value);
+
+/**
+ * @brief   print the list in this form 1->2->3->n
+ *
+ * @param list      pointer to the list.
+ * return [void]
+ */
+void linked_list_print(LinkedList *list);
+
+/**
+ * @brief Destroys a linked list and releases all allocated memory.
+ *
+ * Frees every node contained in the linked list and then frees the
+ * linked list structure itself. The pointer is set to NULL after
+ * successful destruction to prevent dangling pointer access.
+ *
+ * @param list A pointer to the linked list pointer to be destroyed.
+ *
+ * @note The function does nothing if the provided pointer or list is NULL.
+ */
+void linked_list_destroy(LinkedList **list);
+
 #endif // !LINKED_LIST_H
 

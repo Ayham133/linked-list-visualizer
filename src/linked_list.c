@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
 #include "../include/linked_list.h"
@@ -125,4 +126,74 @@ int linked_list_delete(LinkedList *list, int index)
     temp->next = temp->next->next;
 
     return value;
+}
+
+/**
+ * @brief   check if the list contains the passed value.
+ *
+ * @param list      pointer to the list.
+ * @param value     the value to search for in the list.
+ * @return          return true if the valuse was found in the list, false other wise.
+ */
+bool linked_list_contains(LinkedList *list, int value)
+{
+    if(list == NULL || linked_list_empty(list))
+        exit(EXIT_FAILURE);
+    
+    Node *temp = list->head;
+    while (temp != NULL && temp->value != value)
+        temp = temp->next;
+
+    return temp != NULL;
+}
+
+/**
+ * @brief   print the list in this form '1->2->3->n', this function doesn't end with "\n" opertator.
+ *
+ * @param list      pointer to the list.
+ * return [void]
+ */
+void linked_list_print(LinkedList *list)
+{
+    if(list == NULL || linked_list_empty(list))
+        return;
+
+    Node *temp = list->head;
+    while(temp != NULL)
+    {
+        printf("%d", temp->value);
+        if(temp->next != NULL)
+            printf("->");
+
+        temp = temp->next;
+    }
+}
+
+/**
+ * @brief Destroys a linked list and releases all allocated memory.
+ *
+ * Frees every node contained in the linked list and then frees the
+ * linked list structure itself. The pointer is set to NULL after
+ * successful destruction to prevent dangling pointer access.
+ *
+ * @param list A pointer to the linked list pointer to be destroyed.
+ *
+ * @note The function does nothing if the provided pointer or list is NULL.
+ */
+void linked_list_destroy(LinkedList **list)
+{
+    if(list == NULL || *list == NULL)
+        return;
+
+    Node *current = (*list)->head;
+
+    while(current != NULL)
+    {
+        Node *next = current->next;
+        free(current);
+        current = next;
+    }
+
+    free(*list);
+    *list = NULL;
 }
