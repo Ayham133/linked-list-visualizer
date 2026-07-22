@@ -1,3 +1,4 @@
+#include <stdbool.h>
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -90,32 +91,32 @@ bool linked_list_get(LinkedList *list, size_t index, int *out_value)
  *
  * @param list      pointer to the list.
  * @param index     the index of the node, that is going to get deleted.
- * @return          return the value of the deleted node.
+ * @param out_value     pointer to the addrese where the value of the deleted node will go to.
+ * @return [bool]          return true if there were no errors, false otherwise.
  */
-int linked_list_delete(LinkedList *list, size_t index)
+bool linked_list_delete(LinkedList *list, size_t index, int *out_value)
 {
-    if(list == NULL || linked_list_empty(list))
-        exit(EXIT_FAILURE);
+    if(list == NULL || linked_list_empty(list) || index >= list->size)
+        return false;
 
-    if(index < 0 || index >= list->size)
-        exit(EXIT_FAILURE);
+    list->size--;
 
-    int value;
     // if the list has one node.
-    if(list->size == 1){
-        value = list->head->value;
-        free(list);
-        return value;
+    if(index == 0 && list->size == 1){
+        *out_value = list->head->value;
+        list->head = NULL; 
+        return true;
     }
 
     // if the deleted node is the head.
     if(index == 0)
     {
-        value = list->head->value;
+        *out_value = list->head->value;
         list->head = list->head->next;
-        return value;
+        return true;
     }
 
+    // in the mid of the linked list.
     Node *temp = list->head;
     while(temp != NULL && index > 1)
     {
@@ -123,10 +124,10 @@ int linked_list_delete(LinkedList *list, size_t index)
         index--;
     }
 
-    value = temp->value;
+    *out_value = temp->next->value;
     temp->next = temp->next->next;
 
-    return value;
+    return true;
 }
 
 /**

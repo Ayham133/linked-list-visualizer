@@ -51,9 +51,10 @@ bool linked_list_get(LinkedList *list, size_t index, int *out_value);
  *
  * @param list      pointer to the list.
  * @param index     the index of the node, that is going to get deleted.
- * @return          return the value of the deleted node.
+ * @param out_value     pointer to the addrese where the value of the deleted node will go to.
+ * @return [bool]          return true if there were no errors, false otherwise.
  */
-int linked_list_delete(LinkedList *list, size_t index);
+bool linked_list_delete(LinkedList *list, size_t index, int *out_value);
 
 /**
  * @brief   check if the list containes the passed value.
@@ -62,7 +63,7 @@ int linked_list_delete(LinkedList *list, size_t index);
  * @param value     the value to search for in the list.
  * @return          return true if the valuse was found in the list, false other wise.
  */
-bool linked_list_containes(LinkedList *list, int value);
+bool linked_list_contains(LinkedList *list, int value);
 
 /**
  * @brief   print the list in this form 1->2->3->n

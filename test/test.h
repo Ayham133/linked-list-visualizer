@@ -17,9 +17,9 @@
 // Test Macro
 #define RUN_TEST(test)                      \
     do {                                    \
-       printf("[" YEL "RUN" RESET " ], %s\n", #test);   \
+       printf("[" YEL "RUN" RESET "   ] %s\n", #test);   \
         test();                             \
-       printf("[ " GRN "OK" RESET " ], %s\n", #test);   \
+       printf("[    " GRN "OK" RESET "] %s\n", #test);   \
     } while(0);                             \
 
 #endif // !TEST_H

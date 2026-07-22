@@ -33,46 +33,117 @@ void test_linked_list_insert()
     assert(out_value == 20);
     assert(list->size == 2);
 
-    // Testing invalid index.
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_get()
+{
+    LinkedList *list = linked_list_create();
+    int out_value;
+
+    linked_list_insert(list, 10);
+    assert(linked_list_get(list, 0, &out_value));
+    assert(out_value == 10);
+
+    linked_list_insert(list, 20);
+    linked_list_insert(list, 30);
+    assert(linked_list_get(list, 1, &out_value));
+    assert(out_value == 20);
+
+    assert(linked_list_get(list, 2, &out_value));
+    assert(out_value == 30);
+    
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_get_invalid_index()
+{
+    LinkedList *list = linked_list_create();
+    int out_value;
     assert(!linked_list_get(list, 10, &out_value));
+
+    linked_list_destroy(&list);
+
+}
+
+void test_linked_list_find()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+    linked_list_insert(list, 20);
+    linked_list_insert(list, 30);
+    assert(linked_list_contains(list, 10));
+    assert(linked_list_contains(list, 20));
+    assert(linked_list_contains(list, 30));
 
     linked_list_destroy(&list);
 }
 
+void test_linked_list_delete_first_node()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+    int out_value;
+    assert(linked_list_delete(list, 0, &out_value));
+   
+    assert(list->head == NULL);
+    assert(list->size == 0);
+    assert(linked_list_empty(list));
+    assert(out_value == 10);
+
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_delete_last_node()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+    linked_list_insert(list, 20);
+   
+    int out_value;
+    linked_list_delete(list, 1, &out_value);
+
+    assert(list->head != NULL);
+    assert(list->size == 1);
+    assert(!linked_list_empty(list));
+    assert(out_value == 20);
+
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_delete_mid_node()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+    linked_list_insert(list, 20);
+    linked_list_insert(list, 30);
+
+    int out_value;
+    linked_list_delete(list, 1, &out_value);
+
+    assert(list->head != NULL);
+    assert(list->size == 2);
+    assert(!linked_list_empty(list));
+    assert(out_value == 20);
+
+    linked_list_destroy(&list);
+
+}
 
 int main(void)
 {
     printf("Testing\n");
 
     RUN_TEST(test_linked_list_create);
-    printf("\n");
     RUN_TEST(test_linked_list_insert);
-    printf("\n");
+    RUN_TEST(test_linked_list_get);
+    RUN_TEST(test_linked_list_get_invalid_index);
+    RUN_TEST(test_linked_list_find);
+    RUN_TEST(test_linked_list_delete_first_node);
+    RUN_TEST(test_linked_list_delete_last_node);
+    RUN_TEST(test_linked_list_delete_mid_node);
 
-    // printf("first insertion 10 to list...");
-    // linked_list_insert(list, 10);
-    // assert(list->head->value == 10);// head should have 10
-    // printf("Passed\n");
-    //
-    // printf("insert 20 to list............");
-    // linked_list_insert(list, 20);
-    // assert(list->tail->value == 20);//tail should have 20
-    // printf("Passed\n");
-    //
-    // printf("get the first value.........");
-    // int number = linked_list_get(list, 0);
-    // assert(number == 10);
-    // printf("%d, Passed\n", number);
-    //
-    // printf("get the second value.........");
-    // number = linked_list_get(list, 1);
-    // assert(number == 20);
-    // printf("%d, Passed\n", number);
-    //
-    // // printf("get with invalid index.........");
-    // // linked_list_get(list, 5);
-    // // // printf("Passed\n");
-    // //
+
     // printf("list before........................");
     // Node *temp = list->head;
     // while(temp != NULL)
