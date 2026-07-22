@@ -41,9 +41,10 @@ void linked_list_insert(LinkedList *list,int value);
  *
  * @param list      pointer to the list.
  * @param index     the index to get the value from.
- * @return          return the value that has the addrese index.
+ * @param out_value     pointer to the addrese of the out_value, used to put the data in that addrese.
+ * @return          return true if the function execute successfuly, false other wise.
  */
-int linked_list_get(LinkedList *list, int index);
+bool linked_list_get(LinkedList *list, size_t index, int *out_value);
 
 /**
  * @brief   deletes the node at the index, and returns it's value.
@@ -52,7 +53,7 @@ int linked_list_get(LinkedList *list, int index);
  * @param index     the index of the node, that is going to get deleted.
  * @return          return the value of the deleted node.
  */
-int linked_list_delete(LinkedList *list, int index);
+int linked_list_delete(LinkedList *list, size_t index);
 
 /**
  * @brief   check if the list containes the passed value.

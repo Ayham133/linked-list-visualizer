@@ -1,3 +1,4 @@
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -61,27 +62,27 @@ void linked_list_insert(LinkedList *list, int value)
  *
  * @param list      pointer to the list.
  * @param index     the index to get the value from.
- * @return          return the value that has the addrese index.
+ * @param out_value     pointer to the addrese of the out_value, used to put the data in that addrese.
+ * @return          return true if the function execute successfuly, false other wise.
  */
-int linked_list_get(LinkedList *list, int index)
+bool linked_list_get(LinkedList *list, size_t index, int *out_value)
 {
-    if(list == NULL || linked_list_empty(list))
-        exit(EXIT_FAILURE);
-
-    if(index < 0 || index >= list->size)
-        exit(EXIT_FAILURE);
+    if (list == NULL || index >= list->size)
+        return false;
 
     Node *temp = list->head;
-    while(temp != NULL && index > 0)
+
+    while (temp != NULL && index > 0)
     {
         temp = temp->next;
         index--;
     }
 
-    if(temp == NULL)
-        exit(EXIT_FAILURE);
+    if (temp == NULL)
+        return false;
 
-    return temp->value;
+    *out_value = temp->value;
+    return true;
 }
 
 /**
@@ -91,7 +92,7 @@ int linked_list_get(LinkedList *list, int index)
  * @param index     the index of the node, that is going to get deleted.
  * @return          return the value of the deleted node.
  */
-int linked_list_delete(LinkedList *list, int index)
+int linked_list_delete(LinkedList *list, size_t index)
 {
     if(list == NULL || linked_list_empty(list))
         exit(EXIT_FAILURE);
