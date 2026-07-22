@@ -60,7 +60,7 @@ void test_linked_list_get_invalid_index()
 {
     LinkedList *list = linked_list_create();
     int out_value;
-    assert(!linked_list_get(list, 10, &out_value));
+    assert(linked_list_get(list, 10, &out_value) == false);
 
     linked_list_destroy(&list);
 
@@ -77,6 +77,27 @@ void test_linked_list_find()
     assert(linked_list_contains(list, 30));
 
     linked_list_destroy(&list);
+}
+
+void test_linked_list_delete_null_list()
+{
+    LinkedList *list = NULL;
+
+    int out_value;
+    assert(linked_list_delete(list, 0, &out_value) == false);
+   
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_delete_empty_list()
+{
+    LinkedList *list = linked_list_create();
+
+    int out_value;
+    assert(linked_list_delete(list, 0, &out_value) == false);
+
+    linked_list_destroy(&list);
+
 }
 
 void test_linked_list_delete_first_node()
@@ -105,7 +126,7 @@ void test_linked_list_delete_last_node()
 
     assert(list->head != NULL);
     assert(list->size == 1);
-    assert(!linked_list_empty(list));
+    assert(linked_list_empty(list) == false);
     assert(out_value == 20);
 
     linked_list_destroy(&list);
@@ -123,11 +144,79 @@ void test_linked_list_delete_mid_node()
 
     assert(list->head != NULL);
     assert(list->size == 2);
-    assert(!linked_list_empty(list));
+    assert(linked_list_empty(list) == false);
     assert(out_value == 20);
 
     linked_list_destroy(&list);
+}
 
+void test_linked_list_contains_null_list()
+{
+    LinkedList *list = NULL;
+
+    assert(linked_list_contains(list, 1) == false);
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_contains_empty_list()
+{
+    LinkedList *list = linked_list_create();
+
+    assert(linked_list_contains(list, 1) == false);
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_contains_all_positions()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+    linked_list_insert(list, 20);
+    linked_list_insert(list, 30);
+
+    assert(linked_list_contains(list, 10));
+    assert(linked_list_contains(list, 20));
+    assert(linked_list_contains(list, 30));
+
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_contains_not_existing_value()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+
+    assert(linked_list_empty(list) == false);
+    assert(linked_list_contains(list, 999) == false);
+
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_is_empty_null_list()
+{
+    LinkedList *list = NULL;
+
+    assert(linked_list_empty(list));
+
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_is_empty_not_empty_list()
+{
+    LinkedList *list = linked_list_create();
+    linked_list_insert(list, 10);
+
+    assert(linked_list_empty(list) == false);
+
+    linked_list_destroy(&list);
+}
+
+void test_linked_list_is_empty()
+{
+    LinkedList *list = linked_list_create();
+
+    assert(linked_list_empty(list));
+
+    linked_list_destroy(&list);
 }
 
 int main(void)
@@ -139,72 +228,18 @@ int main(void)
     RUN_TEST(test_linked_list_get);
     RUN_TEST(test_linked_list_get_invalid_index);
     RUN_TEST(test_linked_list_find);
+    RUN_TEST(test_linked_list_delete_null_list);
+    RUN_TEST(test_linked_list_delete_empty_list);
     RUN_TEST(test_linked_list_delete_first_node);
     RUN_TEST(test_linked_list_delete_last_node);
     RUN_TEST(test_linked_list_delete_mid_node);
+    RUN_TEST(test_linked_list_contains_empty_list);
+    RUN_TEST(test_linked_list_contains_null_list);
+    RUN_TEST(test_linked_list_contains_all_positions);
+    RUN_TEST(test_linked_list_contains_not_existing_value);
+    RUN_TEST(test_linked_list_is_empty);
+    RUN_TEST(test_linked_list_is_empty_not_empty_list);
+    RUN_TEST(test_linked_list_is_empty_null_list);
 
-
-    // printf("list before........................");
-    // Node *temp = list->head;
-    // while(temp != NULL)
-    // {
-    //     printf("%d", temp->value);
-    //     if(temp->next != NULL)
-    //         printf("->");
-    //
-    //     temp = temp->next;
-    // }
-    //
-    // printf("\ndelete the first value.......");
-    // linked_list_delete(list, 0);
-    // printf("Passed\n");
-    //
-    // printf("list after........................");
-    // temp = list->head;
-    // while(temp != NULL)
-    // {
-    //     printf("%d", temp->value);
-    //     if(temp->next != NULL)
-    //         printf("->");
-    //
-    //     temp = temp->next;
-    // }
-    // printf("\tPassed\n");
-    //
-    // printf("Finding a value that doesn't exists in the list......."); 
-    // assert(!linked_list_containes(list, 10));
-    // printf("\tPassed\n");
-    //
-    // printf("Finding a value that does exists......................");
-    // assert(linked_list_containes(list, 20));
-    // printf("\tPassed\n");
-    //
-    // printf("printing list.........................................");
-    // linked_list_print(list);
-    // printf("\n");
-    //
-    // LinkedList *list2 = linked_list_create();
-    // linked_list_insert(list2, 10);
-    // linked_list_insert(list2, 20);
-    // linked_list_insert(list2, 30);
-    // linked_list_insert(list2, 40);
-    // printf("printing list2.........................................");
-    // linked_list_print(list2);
-    // printf("\n");
-    //
-    // LinkedList *list3 = linked_list_create();
-    // printf("printing an empty list.........................................");
-    // linked_list_print(list3);
-    // printf("Passed\n");
-    //
-    // list3 = NULL;
-    // printf("printing a NULL list.........................................");
-    // linked_list_print(list3);
-    // printf("Passed\n");
-    //
-    // printf("destroy list2...........................................");
-    // linked_list_destroy(&list2);
-    // printf("Passed\n");
-    //
     return EXIT_SUCCESS;
 }

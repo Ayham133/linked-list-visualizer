@@ -9,7 +9,7 @@
 typedef struct LinkedList{
     struct Node *head;
     struct Node *tail;
-    uint16_t size;
+    size_t size;
 }LinkedList;
 
 

@@ -31,7 +31,7 @@ LinkedList *linked_list_create()
  */
 bool linked_list_empty(LinkedList *list)
 {
-    return list->size == 0;
+    return list == NULL || list->head == NULL || list->size == 0;
 }
 
 /**
@@ -140,8 +140,11 @@ bool linked_list_delete(LinkedList *list, size_t index, int *out_value)
 bool linked_list_contains(LinkedList *list, int value)
 {
     if(list == NULL || linked_list_empty(list))
-        exit(EXIT_FAILURE);
-    
+        return false;
+
+    if(list->size == 1)
+        return list->head->value == value;
+
     Node *temp = list->head;
     while (temp != NULL && temp->value != value)
         temp = temp->next;
