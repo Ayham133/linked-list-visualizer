@@ -11,6 +11,7 @@ find_package(raylib REQUIRED)
 add_library(linked_list
     src/node.c
     src/linked_list.c
+    src/linked_list_draw.c
 )
 
 target_include_directories(linked_list

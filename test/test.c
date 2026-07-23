@@ -1,8 +1,12 @@
 #include <assert.h>
+#include <raylib.h>
 #include <stdbool.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/linked_list.h"
+#include "../include/linked_list_draw.h"
+#include "raylib.h"
 #include "test.h"
 
 void test_linked_list_create()
@@ -219,6 +223,28 @@ void test_linked_list_is_empty()
     linked_list_destroy(&list);
 }
 
+void test_linked_list_draw_starting_line()
+{
+
+    Vector2 center = {100.0f, 100.0f};
+    size_t raduis = 50;
+    Vector2 starting_position = line_start_postion(center, raduis);
+
+    assert(starting_position.x == 150.0f);
+    assert(starting_position.y == center.y);
+}
+
+void test_linked_list_draw_end_position_line()
+{
+    Vector2 next_center = {100.0f, 100.0f};
+    size_t raduis = 50;
+    Vector2 end_position = line_end_position(next_center, raduis);
+
+    assert(end_position.y == next_center.y);
+    assert(end_position.x == 50);
+
+}
+
 int main(void)
 {
     printf("Testing\n");
@@ -240,6 +266,9 @@ int main(void)
     RUN_TEST(test_linked_list_is_empty);
     RUN_TEST(test_linked_list_is_empty_not_empty_list);
     RUN_TEST(test_linked_list_is_empty_null_list);
+    printf("\n");
 
+    RUN_TEST(test_linked_list_draw_starting_line);
+    RUN_TEST(test_linked_list_draw_end_position_line);
     return EXIT_SUCCESS;
 }
